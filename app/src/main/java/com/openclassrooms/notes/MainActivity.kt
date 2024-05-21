@@ -2,10 +2,14 @@ package com.openclassrooms.notes
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.openclassrooms.notes.databinding.ActivityMainBinding
+import com.openclassrooms.notes.model.Note
 import com.openclassrooms.notes.repository.NotesRepository
+import com.openclassrooms.notes.viewmodel.NoteViewModel
 import com.openclassrooms.notes.widget.NoteItemDecoration
 import com.openclassrooms.notes.widget.NotesAdapter
 import kotlinx.coroutines.launch
@@ -22,7 +26,9 @@ class MainActivity : AppCompatActivity() {
 
     private val notesAdapter = NotesAdapter(emptyList())
 
-    private val notesRepository = NotesRepository()
+    //private val notesRepository = NotesRepository()
+    // Toutes les itéractions avec la base passeront par cet objet
+    private lateinit var oNoteViewModel : NoteViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,9 +36,23 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Lien avec le ViewModel
+        oNoteViewModel = ViewModelProvider(this)[NoteViewModel::class.java]
+
         initRecyclerView()
         initFABButton()
+
         collectNotes()
+
+
+
+
+
+
+
+
+
+
     }
 
     /**
@@ -40,9 +60,14 @@ class MainActivity : AppCompatActivity() {
      */
     private fun collectNotes() {
         lifecycleScope.launch {
-            notesRepository.notes.collect {
+//            notesRepository.notes.collect {
+//                notesAdapter.updateNotes(it)
+//            }
+            oNoteViewModel.notes.collect {
                 notesAdapter.updateNotes(it)
             }
+
+
         }
     }
 
