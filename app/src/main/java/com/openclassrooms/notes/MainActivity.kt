@@ -4,15 +4,12 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.openclassrooms.notes.databinding.ActivityMainBinding
 import com.openclassrooms.notes.model.Note
-import com.openclassrooms.notes.repository.NotesRepository
 import com.openclassrooms.notes.viewmodel.NoteViewModel
 import com.openclassrooms.notes.widget.NoteItemDecoration
 import com.openclassrooms.notes.widget.NotesAdapter
-import kotlinx.coroutines.launch
 
 /**
  * The main activity for the app.
@@ -24,10 +21,10 @@ class MainActivity : AppCompatActivity() {
      */
     private lateinit var binding: ActivityMainBinding
 
-    private val notesAdapter = NotesAdapter(emptyList())
+    private val oNotesAdapter = NotesAdapter(emptyList())
 
-    //private val notesRepository = NotesRepository()
-    // Toutes les itéractions avec la base passeront par cet objet
+    //private val notesRepository = NotesRepository() // Old code
+    // Now, I use a viewModel
     private lateinit var oNoteViewModel : NoteViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,34 +39,30 @@ class MainActivity : AppCompatActivity() {
         initRecyclerView()
         initFABButton()
 
-        collectNotes()
+        //collectNotes()
 
-
-
-
-
-
-
-
+        oNoteViewModel.oLiveDataNotes.observe(this, Observer<List<Note>> {
+            oNotesAdapter.updateNotes(it)
+        })
 
 
     }
 
-    /**
-     * Collects notes from the repository and updates the adapter.
-     */
-    private fun collectNotes() {
-        lifecycleScope.launch {
-//            notesRepository.notes.collect {
+//    /**
+//     * OLD CODE : Collects notes from the repository and updates the adapter.
+//     */
+//    private fun collectNotes() {
+//        lifecycleScope.launch {
+////            notesRepository.notes.collect {
+////                notesAdapter.updateNotes(it)
+////            }
+//            oNoteViewModel.notes.collect {
 //                notesAdapter.updateNotes(it)
 //            }
-            oNoteViewModel.notes.collect {
-                notesAdapter.updateNotes(it)
-            }
-
-
-        }
-    }
+//
+//
+//        }
+//    }
 
     /**
      * Initializes the FAB button.
@@ -96,7 +89,7 @@ class MainActivity : AppCompatActivity() {
                 )
             )
 
-            adapter = notesAdapter
+            adapter = oNotesAdapter
         }
 
     }
