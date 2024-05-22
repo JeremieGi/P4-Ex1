@@ -10,10 +10,13 @@ import com.openclassrooms.notes.model.Note
 import com.openclassrooms.notes.viewmodel.NoteViewModel
 import com.openclassrooms.notes.widget.NoteItemDecoration
 import com.openclassrooms.notes.widget.NotesAdapter
+import dagger.hilt.android.AndroidEntryPoint
+
 
 /**
  * The main activity for the app.
  */
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     /**
@@ -25,7 +28,7 @@ class MainActivity : AppCompatActivity() {
 
     //private val notesRepository = NotesRepository() // Old code
     // Now, I use a viewModel
-    private lateinit var oNoteViewModel : NoteViewModel
+    private lateinit var oNoteViewModel: NoteViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

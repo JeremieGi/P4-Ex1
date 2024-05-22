@@ -1,11 +1,15 @@
+// Type DSL Kotlin
+
 plugins {
+    kotlin("kapt")
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
     namespace = "com.openclassrooms.notes"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.openclassrooms.notes"
@@ -40,14 +44,10 @@ android {
 
 dependencies {
 
-    val lifecycle_version = "2.6.1"
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.0")
+    implementation ("androidx.lifecycle:lifecycle-extensions:2.2.0")
+    implementation ("androidx.activity:activity-ktx:1.9.0")
 
-    // ViewModel
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
-    // LiveData
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version")
-
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version")
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
@@ -58,4 +58,9 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+
+    // Hilt
+    val hilt_version = "2.48.1"
+    implementation("com.google.dagger:hilt-android:$hilt_version")
+    kapt("com.google.dagger:hilt-android-compiler:$hilt_version")
 }

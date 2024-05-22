@@ -2,6 +2,7 @@ package com.openclassrooms.notes.service
 
 import com.openclassrooms.notes.model.Note
 
+
 /**
  * Defines the contract for the API that manages the notes
  */

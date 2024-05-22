@@ -2,6 +2,7 @@ package com.openclassrooms.notes.service
 
 import com.openclassrooms.notes.model.Note
 
+
 /**
  * Implementation of the [NotesApiService] interface that stores note in local
  */
