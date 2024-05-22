@@ -1,11 +1,7 @@
 package com.openclassrooms.notes.model
 
-class Note (
+data class Note (
     val sTitle : String,
     val sBody : String) {
-
-
-
-
 
 }

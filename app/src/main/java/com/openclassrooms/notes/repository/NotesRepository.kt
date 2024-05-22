@@ -27,4 +27,8 @@ class NotesRepository @Inject constructor(
     val notes: Flow<List<Note>> = flow {
         emit(notesApiService.getAllNotes())
     }
+
+    fun addNote(note : Note) {
+        notesApiService.addNote(note)
+    }
 }
